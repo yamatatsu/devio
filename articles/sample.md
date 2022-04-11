@@ -10,26 +10,26 @@ postCode: 864131
 
 ## hogehoge
 
-\`\`\`ts
+```ts
 const hoge = 'hoge';
-\`\`\`
+```
 
-\`\`\`ts
+```ts
 const fuga = 'fuga';
-\`\`\`
+```
 
-\`\`\`ts
+```ts
 const hoge = 'hoge';
-\`\`\`
+```
 
-\`\`\`ts
+```ts
 const hoge = 'hoge';
-\`\`\`
+```
 
-\`\`\`ts
+```ts
 const hoge = 'hoge';
-\`\`\`
+```
 
-\`\`\`ts
+```ts
 const hoge = 'hoge';
-\`\`\`
+```

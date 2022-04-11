@@ -3,11 +3,8 @@ import { readFileSync, writeFileSync } from "fs";
 import { parseMarkdownHeaders } from "markdown-headers";
 import * as zod from "zod";
 import { test, expect, Page } from "@playwright/test";
+import WPPage from "./WPPage";
 
-const LOGIN_URL = process.env.LOGIN_URL!;
-const POST_PAGE_URL = process.env.POST_PAGE_URL!;
-const ID = process.env.ID!;
-const PW = process.env.PW!;
 const CHANGED_ARTICLES = process.env.CHANGED_ARTICLES!;
 
 const schema = zod.object({
@@ -22,14 +19,13 @@ const schema = zod.object({
 });
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(LOGIN_URL);
-  await page.fill("#user_login", ID);
-  await page.fill("#user_pass", PW);
-  await page.click("#wp-submit");
+  const wpPage = new WPPage(page);
+  await wpPage.login();
 });
 
 test("should allow me to add todo items", async ({ page }) => {
   const screenshot = screenthotter(page);
+  const wpPage = new WPPage(page);
 
   const articlePaths = CHANGED_ARTICLES.split(" ").filter((path) =>
     path.startsWith("articles/")
@@ -45,38 +41,28 @@ test("should allow me to add todo items", async ({ page }) => {
     const wpContent = replaceWPCode(markdown);
 
     if (!postCode) {
-      await page.click("#wp-admin-bar-new-content");
+      await wpPage.newPost();
     } else {
-      await page.goto(`${POST_PAGE_URL}?post=${postCode}&action=edit`);
+      await wpPage.gotoPost(postCode);
     }
 
-    await page.fill("#title", title);
-    await page.fill("#content", wpContent);
-    await page.fill("#easy_wp_description", description);
+    await wpPage.fill(title, wpContent, description);
 
     if (!postCode) {
-      await page.click("#save-post");
-      await page.waitForNavigation();
-      const newPostCode = page.url().match(/post=(\d+)/)?.[1];
-      if (!newPostCode) {
-        throw new Error(`No post code is found. postCode: ${postCode}`);
-      }
+      await wpPage.save();
+      const newPostCode = await wpPage.getPostCode();
       writeFileSync(
         articlePath,
         article.replace(/postCode:\s*\n/, `postCode: ${newPostCode}\n`)
       );
     }
 
-    await page.click("#edit-slug-buttons>button");
-    await page.fill("#new-post-slug", slug);
-    await page.click("#edit-slug-buttons>button");
-
-    await screenshot("filled-slug");
+    await wpPage.setSlug(slug);
 
     if (published) {
-      await page.click("#publish");
+      await wpPage.publish();
     } else {
-      await page.click("#save-post");
+      await wpPage.save();
     }
 
     await screenshot("after-save");
