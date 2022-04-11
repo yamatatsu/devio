@@ -17,15 +17,15 @@ jobs:
         run: npm ci
       - name: Install Playwright for chromium
         run: npx playwright install-deps chromium
+      - run: git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} articles/ | xargs
       - name: Get changed articles
-        id: changed-articles
-        # Set outputs using the command.
+        id: changed
         run: |
           echo "::set-output name=articles::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} articles/ | xargs)"
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          CHANGED_ARTICLES: ${{steps.changed-articles.outputs.articles}}
+          CHANGED_ARTICLES: ${{steps.changed.outputs.articles}}
       - uses: actions/upload-artifact@v2
         if: always()
         with:
