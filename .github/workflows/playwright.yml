@@ -25,7 +25,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          CHANGED_ARTICLES: ${{needs.changed-articles.outputs.articles}}
+          CHANGED_ARTICLES: ${{steps.changed-articles.outputs.articles}}
       - uses: actions/upload-artifact@v2
         if: always()
         with:
