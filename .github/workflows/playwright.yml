@@ -23,6 +23,9 @@ jobs:
         run: npx playwright test
         env:
           CHANGED_ARTICLES: ${{ steps.changed.outputs.added_modified }}
+          LOGIN_URL: ${{ secrets.LOGIN_URL }}
+          ID: ${{ secrets.ID }}
+          PW: ${{ secrets.PW }}
       - uses: actions/upload-artifact@v2
         if: always()
         with:

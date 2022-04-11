@@ -1,13 +1,13 @@
 import "dotenv/config";
 import { test, expect, Page } from "@playwright/test";
 
-const URL = process.env.URL;
+const LOGIN_URL = process.env.LOGIN_URL;
 const ID = process.env.ID;
 const PW = process.env.PW;
 const CHANGED_ARTICLES = process.env.CHANGED_ARTICLES;
 
 test.beforeEach(async ({ page }) => {
-  await page.goto(URL);
+  await page.goto(LOGIN_URL);
   await page.fill("#user_login", ID);
   await page.fill("#user_pass", PW);
   await page.click("#wp-submit");
