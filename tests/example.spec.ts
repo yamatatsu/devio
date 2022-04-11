@@ -15,9 +15,10 @@ test.beforeEach(async ({ page }) => {
 
 test("should allow me to add todo items", async ({ page }) => {
   const screenshot = screenthotter(page);
+
+  console.log({ CHANGED_ARTICLES });
   // await page.goto(URL);
   await screenshot("after-login");
-  console.log({ CHANGED_ARTICLES });
 });
 
 // utils
