@@ -16,7 +16,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright for chromium
-        run: npx playwright install-deps chromium
+        run: |
+          npx playwright install
+          npx playwright install-deps chromium
       - id: changed
         uses: jitterbit/get-changed-files@v1
       - name: Run Playwright tests
