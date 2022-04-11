@@ -17,7 +17,7 @@ jobs:
         run: npm ci
       - name: Install Playwright for chromium
         run: npx playwright install-deps chromium
-      - run: git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} articles/ | xargs
+      - run: git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }}..${{ github.sha }} articles/ | xargs
       - name: Get changed articles
         id: changed
         run: |
