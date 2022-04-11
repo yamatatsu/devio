@@ -17,15 +17,15 @@ jobs:
         run: npm ci
       - name: Install Playwright
         run: npx playwright install --with-deps
-      - name: Get changed files
-        id: changes
+      - name: Get changed articles
+        id: changed-articles
         # Set outputs using the command.
         run: |
           echo "::set-output name=articles::$(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} articles/ | xargs)"
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          CHANGED_ARTICLES: ${{needs.changedfiles.outputs.articles}}
+          CHANGED_ARTICLES: ${{needs.changed-articles.outputs.articles}}
       - uses: actions/upload-artifact@v2
         if: always()
         with:
