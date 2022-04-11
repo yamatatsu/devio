@@ -22,7 +22,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test
         env:
-          CHANGED_ARTICLES: ${{ steps.files.outputs.added_modified }}
+          CHANGED_ARTICLES: ${{ steps.changed.outputs.added_modified }}
       - uses: actions/upload-artifact@v2
         if: always()
         with:
