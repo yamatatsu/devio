@@ -12,6 +12,10 @@ const schema = zod.object({
     title: zod.string(),
     description: zod.string(),
     slug: zod.string(),
+    thumbnailId: zod
+      .number()
+      .transform((n) => n.toString())
+      .nullable(),
     published: zod.boolean(),
     postCode: zod.number().nullable(),
   }),
@@ -23,7 +27,7 @@ test.beforeEach(async ({ page }) => {
   await wpPage.login();
 });
 
-test("should allow me to add todo items", async ({ page }) => {
+test("publish articles", async ({ page }) => {
   const screenshot = screenthotter(page);
   const wpPage = new WPPage(page);
 
@@ -36,7 +40,7 @@ test("should allow me to add todo items", async ({ page }) => {
   for (const articlePath of articlePaths) {
     const article = readFileSync(articlePath, "utf-8");
     const {
-      headers: { title, description, slug, published, postCode },
+      headers: { title, description, slug, thumbnailId, published, postCode },
       markdown,
     } = schema.parse(parseMarkdownHeaders(article));
 
@@ -60,6 +64,8 @@ test("should allow me to add todo items", async ({ page }) => {
     }
 
     await wpPage.setSlug(slug);
+
+    thumbnailId && (await wpPage.setEyeCatch(thumbnailId));
 
     if (published) {
       await wpPage.publish();

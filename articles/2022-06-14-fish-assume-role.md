@@ -2,7 +2,8 @@
 title: 環境変数に依存しないassume-roleスクリプト作ってみた
 description: 環境変数に依存しないassume-roleスクリプト作ってみた
 slug: fish-assume-role-script
-published: false
+thumbnailId: 525172 # Tools
+published: true
 postCode: 864131
 ---
 
@@ -119,4 +120,4 @@ alias switch_aws_role_account_D='switch_aws_role [アカウントDのIAM Roleの
 
 ## 使い方
 
-`swiaccd`とか打つとfishがサジェストしてくれます。fishかわいい。
+`swiaccd`とか打って`tab`キーを打つとfishがサジェストしてくれます。fishかわいい。

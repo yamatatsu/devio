@@ -1,9 +1,9 @@
-name: Playwright Tests
+name: Publish
 on:
   push:
     branches: [main]
 jobs:
-  test:
+  publish:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -19,7 +19,7 @@ jobs:
           npx playwright install-deps chromium
       - id: changed
         uses: jitterbit/get-changed-files@v1
-      - name: Run Playwright tests
+      - name: Run Playwright
         run: npx playwright test
         env:
           CHANGED_ARTICLES: ${{ steps.changed.outputs.added_modified }}

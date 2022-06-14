@@ -35,6 +35,14 @@ export default class WPPage {
     await this.page.click("#edit-slug-buttons>button");
   }
 
+  async setEyeCatch(thumbnailId: string) {
+    // await this.page.fill("#_thumbnail_id", thumbnailId, { force: true });
+    const hiddenInput = await this.page.$("#_thumbnail_id");
+    await hiddenInput?.evaluate((el, _thumbnailId) => {
+      (el as HTMLInputElement).value = _thumbnailId;
+    }, thumbnailId);
+  }
+
   async save() {
     await this.page.click("#save-post");
   }
