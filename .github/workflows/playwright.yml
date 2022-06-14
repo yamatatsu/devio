@@ -1,9 +1,6 @@
 name: Playwright Tests
 on:
-  # そのうちpushでもなんかやるか？
-  # push:
-  #   branches: [main]
-  pull_request:
+  push:
     branches: [main]
 jobs:
   test:
