@@ -31,6 +31,8 @@ test("should allow me to add todo items", async ({ page }) => {
     path.startsWith("articles/")
   );
 
+  console.info("CHANGED_ARTICLES", articlePaths);
+
   for (const articlePath of articlePaths) {
     const article = readFileSync(articlePath, "utf-8");
     const {
