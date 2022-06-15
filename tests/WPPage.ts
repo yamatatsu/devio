@@ -1,4 +1,4 @@
-import { test, expect, Page } from "@playwright/test";
+import { Page } from "@playwright/test";
 
 const LOGIN_URL = process.env.LOGIN_URL!;
 const POST_PAGE_URL = process.env.POST_PAGE_URL!;

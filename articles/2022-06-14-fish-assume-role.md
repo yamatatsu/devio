@@ -66,7 +66,7 @@ region = ap-northeast-1
 output = json
 ```
 
-## 3. fish functionをを作成する
+## 3. fish functionを作成する
 
 `~/.config/fish/functions/switch_aws_role.fish` というファイルを作成し、以下のコードを書きます。
 

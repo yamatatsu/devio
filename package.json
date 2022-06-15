@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prepublish": "rm -rf ./screenshots/*",
     "publish": "env CHANGED_ARTICLES=\"$(git diff --name-only | xargs)\" npx playwright test"
   },
   "keywords": [],

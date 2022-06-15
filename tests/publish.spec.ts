@@ -2,7 +2,7 @@ import "dotenv/config";
 import { readFileSync, writeFileSync } from "fs";
 import { parseMarkdownHeaders } from "markdown-headers";
 import * as zod from "zod";
-import { test, expect, Page } from "@playwright/test";
+import { test, Page } from "@playwright/test";
 import WPPage from "./WPPage";
 
 const CHANGED_ARTICLES = process.env.CHANGED_ARTICLES!;
@@ -51,6 +51,8 @@ test("publish articles", async ({ page }) => {
     } else {
       await wpPage.gotoPost(postCode);
     }
+
+    await screenshot("after-show-edit-page");
 
     await wpPage.fill(title, wpContent, description);
 
