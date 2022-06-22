@@ -1,9 +1,9 @@
 import { Page } from "@playwright/test";
 
-const LOGIN_URL = process.env.LOGIN_URL!;
-const POST_PAGE_URL = process.env.POST_PAGE_URL!;
-const ID = process.env.ID!;
-const PW = process.env.PW!;
+const LOGIN_URL = getEnv("LOGIN_URL");
+const POST_PAGE_URL = getEnv("POST_PAGE_URL");
+const ID = getEnv("ID");
+const PW = getEnv("PW");
 
 export default class WPPage {
   constructor(private readonly page: Page) {}
@@ -58,4 +58,14 @@ export default class WPPage {
     }
     return newPostCode;
   }
+}
+
+function getEnv(name: string): string {
+  const val = process.env[name];
+  if (!val) {
+    throw new Error(
+      `The environment variable '${name}' is needed. You can set it to '.env'.`
+    );
+  }
+  return val;
 }
