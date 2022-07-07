@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepublish": "rm -rf ./screenshots/*",
-    "publish": "env CHANGED_ARTICLES=\"$(git diff --name-only | xargs)\" npx playwright test"
+    "publish": "env CHANGED_ARTICLES=\"$(git add -N ./articles && git diff --name-only | xargs)\" npx playwright test"
   },
   "keywords": [],
   "author": "",

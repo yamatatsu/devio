@@ -22,6 +22,8 @@ const schema = zod.object({
   markdown: zod.string(),
 });
 
+test.setTimeout(60_000);
+
 test.beforeEach(async ({ page }) => {
   const wpPage = new WPPage(page);
   await wpPage.login();
@@ -56,6 +58,8 @@ test("publish articles", async ({ page }) => {
 
     await wpPage.fill(title, wpContent, description);
 
+    await screenshot("after-filled");
+
     if (!postCode) {
       await wpPage.save();
       const newPostCode = await wpPage.getPostCode();
@@ -86,9 +90,9 @@ const screenthotter = (page: Page) => {
   let num = 0;
   return async (name: string) => {
     const id = num.toString().padStart(2, "0");
-    await page.screenshot({
-      path: `screenshots/${id}-${name}.png`,
-    });
+    const path = `screenshots/${id}-${name}.png`;
+    await page.screenshot({ path });
+    console.info(`Captured: ${path}`);
     num++;
   };
 };
@@ -97,7 +101,7 @@ const langMap: Record<string, string> = {
   ts: "typescript",
 };
 const replaceWPCode = (markdown: string) =>
-  markdown.replace(/```(ts|typescript)[\s\S]*?```/g, (codeBlock, shortLang) => {
+  markdown.replace(/```(\w+)[\s\S]*?```/g, (codeBlock, shortLang) => {
     const lang = langMap[shortLang] ?? shortLang;
     return codeBlock
       .replace(/^```\w+/, `[${lang}]`)
