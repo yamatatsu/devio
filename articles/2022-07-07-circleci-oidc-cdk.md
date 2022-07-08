@@ -7,11 +7,11 @@ published: true
 postCode: 906374
 ---
 
-↓これで作成しているOIDCProviderとIAM RoleをCDKで作成する
+↓こちらで作成しているOIDCProviderとIAM RoleをCDKで作成してみました。
 
 https://dev.classmethod.jp/articles/circleci-supported-oidc-so-i-tried-linking-it-with-aws/
 
-## CDK
+## CDKの中身
 
 ```ts
 import { Stack, StackProps } from 'aws-cdk-lib';
@@ -50,3 +50,4 @@ export class RoleStack extends Stack {
   }
 }
 ```
+`CIRCLECI_ORGANIZATION_ID`と`CIRCLECI_PROJECT_ID`と、roleに付ける権限が変数で、他はテンプレとして使える！
